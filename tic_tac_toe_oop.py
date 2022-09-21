@@ -1,9 +1,6 @@
 ## Tic tac toe game
 ## Practice with OOP in Python
 
-from re import M
-
-
 class Game_Board:
     def __init__(self, board):
         self.board = board
@@ -20,8 +17,6 @@ class Game_Board:
             print("%d| %s |" % (row_number, " | ".join(row)))
             row_number += 1
         print(" +---+---+---+")
-
-
 
 class Xs:
     def __init__(self, board):
@@ -64,15 +59,89 @@ class Os:
         except ValueError and KeyError:
             print("Not a valid input") 
             return self.user_input()
-                
-def GameOn():
-    main_board=Game_Board([[" "] * 3 for i in range(3)])
-    p1x, p1y = Xs.user_input(object)
-    main_board.board[p1x][p1y] = 'X'
-    main_board.print_board()
-    p2x, p2y = Os.user_input(object)
-    main_board.board[p2x][p2y] = 'O'
-    main_board.print_board()
 
-GameOn()
-    
+def check_win(Game_Board):
+    if Game_Board.board[0][0] == 'X' and Game_Board.board[0][1] == 'X' and Game_Board.board[0][2] == 'X':
+        print("Player 1 has won !")
+        return False
+    if Game_Board.board[0][0] == 'O' and Game_Board.board[0][1] == 'O' and Game_Board.board[0][2] == 'O':
+        print("Player 2 has won !")
+        return False
+    if Game_Board.board[1][0] == 'X' and Game_Board.board[1][1] == 'X' and Game_Board.board[1][2] == 'X':
+        print("Player 1 has won !")
+        return False
+    if Game_Board.board[1][0] == 'O' and Game_Board.board[1][1] == 'O' and Game_Board.board[1][2] == 'O':
+        print("Player 2 has won !")
+        return False    
+    if Game_Board.board[2][0] == 'X' and Game_Board.board[2][1] == 'X' and Game_Board.board[2][2] == 'X':
+        print("Player 1 has won !")
+        return False
+    if Game_Board.board[2][0] == 'O' and Game_Board.board[2][1] == 'O' and Game_Board.board[2][2] == 'O':
+        print("Player 2 has won !")
+        return False
+    if Game_Board.board[0][0] == 'X' and Game_Board.board[1][0] == 'X' and Game_Board.board[2][0] == 'X':
+        print("Player 1 has won !")
+        return False
+    if Game_Board.board[0][0] == 'O' and Game_Board.board[1][0] == 'O' and Game_Board.board[2][0] == 'O':
+        print("Player 2 has won !")
+        return False
+    if Game_Board.board[0][1] == 'X' and Game_Board.board[1][1] == 'X' and Game_Board.board[2][1] == 'X':
+        print("Player 1 has won !")
+        return False
+    if Game_Board.board[0][1] == 'O' and Game_Board.board[1][1] == 'O' and Game_Board.board[2][1] == 'O':
+        print("Player 2 has won !")
+        return False
+    if Game_Board.board[0][2] == 'X' and Game_Board.board[1][2] == 'X' and Game_Board.board[2][2] == 'X':
+        print("Player 1 has won !")
+        return False
+    if Game_Board.board[0][2] == 'O' and Game_Board.board[1][2] == 'O' and Game_Board.board[2][2] == 'O':
+        print("Player 2 has won !")
+        return False
+    if Game_Board.board[0][0] == 'X' and Game_Board.board[1][1] == 'X' and Game_Board.board[2][2] == 'X':
+        print("Player 1 has won !")
+        return False
+    if Game_Board.board[0][0] == 'O' and Game_Board.board[1][1] == 'O' and Game_Board.board[2][2] == 'O':
+        print("Player 2 has won !")
+        return False
+    if Game_Board.board[0][2] == 'X' and Game_Board.board[1][1] == 'X' and Game_Board.board[2][0] == 'X':
+        print("Player 1 has won !")
+        return False
+    if Game_Board.board[0][2] == 'O' and Game_Board.board[1][0] == 'O' and Game_Board.board[2][0] == 'O':
+        print("Player 2 has won !")
+        return False        
+
+def gameOn():
+    main_board=Game_Board([[" "] * 3 for i in range(3)]) ## Create board 3x3
+    game = True ## Start game
+    while game: ## As long as not break
+        p1x, p1y = Xs.user_input(object) ## Frist player input
+        while main_board.board[p1x][p1y] == 'X' or main_board.board[p1x][p1y] == 'O':
+            print("It's already taken !") ## If taken go back
+            p1x, p1y = Xs.user_input(object)
+        
+        main_board.board[p1x][p1y] = 'X' # Place X
+        main_board.print_board() ## Look at the board before second player
+
+        if check_win(main_board) == False:  ## Win check
+            main_board.print_board()
+            break
+
+        main_board.print_board()
+        
+        p2x, p2y = Os.user_input(object) ## Second player turn
+
+        while main_board.board[p2x][p2y] == 'X' or main_board.board[p2x][p2y] == 'O': ## Check if taken
+            print("It's already taken !")
+            p2x, p2y = Os.user_input(object)
+        
+        main_board.board[p2x][p2y] = 'O' ## Place
+        
+        if check_win(main_board) == False: ## WIn check
+            main_board.print_board()
+            break
+
+        main_board.print_board()
+
+if __name__ == '__main__':
+    gameOn()
+
